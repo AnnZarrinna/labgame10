@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Однорукий бандит</title>
+  <script src="script.js"defer></script>
+  <link href="https://googleapis.com/css2?family=Pacifico&family=Parisienne&family=Shrikhand&family=Comfortaa:wght@700&display=swap" rel="stylesheet">
+  <style>
+   :root {
+      --bg-color: #fce7f3;       
+      --card-bg: #fbcfe8;  
+      --cell-bg: #ffffff;   
+      --cell-border: #f472b6; 
+      --accent-color: #ec4899;  
+      --accent-hover: #db2777;   
+      --text-color: #831843;     
+      --subtext-color: #9d174d;  
+      --win-color: #facc15;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+     font-family: 'Shrikhand', serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container {
+      background-color: var(--card-bg);
+      border-radius: 16px;
+      padding: 30px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      text-align: center;
+    }
+    h2 {
+      font-size: 26px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      word-break: break-word;
+    }
+    #attempts {
+      font-size: 16px;
+      color: var(--subtext-color);
+      margin-bottom: 20px;
+    }
+    .generate-btn {
+      background-color: var(--accent-color);
+      color: #000;
+      font-size: 18px;
+      font-weight: 700;
+      padding: 12px 36px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.1s;
+      margin-bottom: 25px;
+      width: 100%;
+    }
+    .generate-btn:hover:not(:disabled) {
+      background-color: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+    .generate-btn:disabled {
+      background-color: var(--disabled-color);
+      color: #9ca3af;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .slot-machine {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      background-color: #fbcfe8;
+      padding: 16px;
+      border: 3px solid #f472b6;
+      border-radius: 20px;
+      box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+    .cell {
+      background-color: var(--cell-bg);
+      border: 2px solid var(--cell-border);
+      border-radius: 8px;
+      height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.3s, background-color 0.3s;
+      overflow: hidden;
+    }
+    .cell svg {
+      width: 60px;
+      height: 60px;
+      transition: transform 0.2s;
+    }
+    .cell.spinning svg {
+      filter: blur(2px);
+      transform: scale(0.9);
+    }
+    .cell.win {
+      border-color: var(--win-color);
+      background-color: rgba(234, 179, 8, 0.15);
+      animation: pulse 1s infinite alternate;
+    }
+    @keyframes pulse {
+      from { transform: scale(1); }
+      to { transform: scale(1.03); }
+    }
+    .message {
+      margin-top: 20px;
+      font-size: 16px;
+      font-weight: 600;
+      min-height: 24px;
+    }
+    .message.win { color: #bb3cb7; }
+    .message.lose { color: #752f2f; }
+  </style>
+</head>
+<body>
+    <div class="container">
+    <h2 id="userName">User 💖</h2>
+    <div id="attempts">Спроба 0 з 3</div>
+    <button id="generateBtn" class="generate-btn" onclick="playSlot()">Generate ✨</button>
+    <div class="slot-machine">
+      <div class="cell" id="c0"></div>
+      <div class="cell" id="c1"></div>
+      <div class="cell" id="c2"></div>
+      <div class="cell" id="c3"></div>
+      <div class="cell" id="c4"></div>
+      <div class="cell" id="c5"></div>
+      <div class="cell" id="c6"></div>
+      <div class="cell" id="c7"></div>
+      <div class="cell" id="c8"></div>
+    </div>
+
+    <div id="statusMessage" class="message"></div>
+  </div>
+</body>
+</html>
